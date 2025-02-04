@@ -1,0 +1,54 @@
+# Directorios de compilación
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# Archivos de Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+
+# Archivos temporales
+[Tt]emp/
+[Tt]mp/
+*.tmp
+*.log
+*.bak
+
+# Paquetes NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# Archivos de configuración local
+appsettings.Development.json
+appsettings.Local.json
+*.Development.json
+*.Local.json
+
+# Archivos de secretos y claves
+*.key
+*.pem
+*.pfx
+*.p12
+*.cer
+*.pvk
+
+# Archivos específicos de IDE
+.idea/
+.vscode/
+*.sln.iml
+*.DotSettings
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db 

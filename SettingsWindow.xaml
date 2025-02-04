@@ -1,0 +1,199 @@
+<Window x:Class="CursorTranscriptor.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:res="clr-namespace:CursorTranscriptor.Resources"
+        Title="Settings" Height="700" Width="600"
+        WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style x:Key="SettingsGroup" TargetType="Grid">
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Contenido principal -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>  <!-- API Key -->
+                    <RowDefinition Height="Auto"/>  <!-- Modelo Gemini -->
+                    <RowDefinition Height="Auto"/>  <!-- Carpeta de trabajo -->
+                    <RowDefinition Height="Auto"/>  <!-- Instrucciones -->
+                    <RowDefinition Height="Auto"/>  <!-- Codebase y configuración -->
+                </Grid.RowDefinitions>
+
+                <!-- API Key -->
+                <Grid Style="{StaticResource SettingsGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Google API Key:" Style="{StaticResource HeaderText}"/>
+                    <TextBox x:Name="txtApiKey" Grid.Row="1" Padding="5"/>
+                </Grid>
+
+                <!-- Modelo Gemini -->
+                <Grid Grid.Row="1" Style="{StaticResource SettingsGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Modelo de Gemini:" Style="{StaticResource HeaderText}"/>
+                    <ComboBox x:Name="ModelSelector" Grid.Row="1"
+                             Padding="5"
+                             DisplayMemberPath="Name"
+                             SelectedValuePath="Id"
+                             IsSynchronizedWithCurrentItem="True"/>
+                </Grid>
+
+                <!-- Carpeta de trabajo -->
+                <Grid Grid.Row="2" Style="{StaticResource SettingsGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Carpeta de trabajo:" Style="{StaticResource HeaderText}"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="txtWorkingFolder" Padding="5" IsReadOnly="True"/>
+                        <Button Content="..." Grid.Column="1" Width="30" Margin="5,0,0,0"
+                                Click="btnBrowse_Click"/>
+                    </Grid>
+                </Grid>
+
+                <!-- Instrucciones personalizadas -->
+                <Grid Grid.Row="3" Style="{StaticResource SettingsGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="{Binding Source={x:Static res:Strings.CustomInstructions}}" 
+                              Style="{StaticResource HeaderText}"/>
+                    
+                    <TextBox x:Name="txtCustomInstructions" 
+                             Grid.Row="1"
+                             Height="250"
+                             TextWrapping="Wrap" 
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Visible"
+                             HorizontalScrollBarVisibility="Auto"
+                             FontSize="12" 
+                             Padding="10"
+                             Margin="0,0,0,10"
+                             FontFamily="Consolas"/>
+                    
+                    <Button x:Name="btnRestore" 
+                            Grid.Row="2" 
+                            Content="{Binding Source={x:Static res:Strings.RestoreDefaults}}"
+                            HorizontalAlignment="Right"
+                            Padding="10,5"
+                            Click="btnRestore_Click"/>
+                </Grid>
+
+                <!-- Codebase y configuración -->
+                <Grid Grid.Row="4" Style="{StaticResource SettingsGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>  <!-- Generar Codebase -->
+                        <RowDefinition Height="Auto"/>  <!-- Checkbox -->
+                        <RowDefinition Height="Auto"/>  <!-- Status -->
+                        <RowDefinition Height="Auto"/>  <!-- Separador -->
+                        <RowDefinition Height="Auto"/>  <!-- Idioma -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Generar Codebase -->
+                    <Button x:Name="btnGenerateCodebase"
+                            Content="{Binding Source={x:Static res:Strings.GenerateCodebase}}"
+                            Height="32"
+                            Width="150" 
+                            HorizontalAlignment="Left"/>
+
+                    <!-- Checkbox -->
+                    <CheckBox x:Name="chkUseCodebase"
+                              Grid.Row="1"
+                              Content="{Binding Source={x:Static res:Strings.UseCodebaseIndexing}}"
+                              Margin="0,10,0,0"/>
+
+                    <!-- Status -->
+                    <TextBlock x:Name="txtStatus" 
+                               Grid.Row="2"
+                               TextWrapping="Wrap" 
+                               Margin="0,10,0,0"/>
+
+                    <!-- Separador -->
+                    <Separator Grid.Row="3" 
+                               Margin="0,20,0,20"
+                               Background="#DDDDDD"/>
+
+                    <!-- Idioma -->
+                    <Grid Grid.Row="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="{Binding Source={x:Static res:Strings.Language}}" 
+                                  Style="{StaticResource HeaderText}"/>
+                        
+                        <ComboBox x:Name="LanguageSelector" 
+                                  Grid.Row="1"
+                                  Width="180"
+                                  Height="32"
+                                  Padding="8,6"
+                                  Margin="0,5,0,0"
+                                  HorizontalAlignment="Left">
+                            <ComboBox.Resources>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Padding" Value="8,4"/>
+                                </Style>
+                            </ComboBox.Resources>
+                            <ComboBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🇪🇸" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Español" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🇺🇸" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="English" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Barra de botones -->
+        <Grid Grid.Row="1" Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right"
+                        Margin="20,10">
+                <Button x:Name="btnSave" 
+                        Content="Guardar cambios" 
+                        Width="120" Height="30"
+                        Margin="0,0,10,0" 
+                        Click="btnSave_Click"/>
+                <Button x:Name="btnCancel" 
+                        Content="Cancelar" 
+                        Width="80" Height="30"
+                        Click="btnCancel_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window> 
